@@ -1,0 +1,20 @@
+debug: true
+version: "0.0.1"
+server:
+  addr: ":8020"
+  url: "http://127.0.0.1:8020"
+db:
+  driver: "mysql"
+  source: "root:123456@(127.0.0.1:3306)/utask?charset=utf8mb4"
+  max_open_conns: 50
+  max_idle_conns: 30
+  max_retry_times: 32
+  max_lock_time: 300
+
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
+client:
+  max_waits: 128
+  max_process: 64

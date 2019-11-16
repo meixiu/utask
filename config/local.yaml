@@ -1,0 +1,14 @@
+debug: true
+version: "0.0.1"
+server:
+  addr: ":8020"
+  check_url: "http://127.0.0.1:8020/api/check"
+db:
+  driver: "mysql"
+  source: "root:123456@(127.0.0.1:3306)/utask?charset=utf8mb4"
+  max_open_conns: 50
+  max_idle_conns: 30
+redis:
+  addr: "127.0.0.1:6379"
+  password: ""
+  db: 0
