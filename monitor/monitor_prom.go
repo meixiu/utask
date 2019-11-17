@@ -25,7 +25,7 @@ type PromMonitor struct {
 	// RequestCounterVer producer request num
 	RequestCounterVer *prometheus.CounterVec
 	// ResponseLatency producer latency
-	ResponseLatency *prometheus.GaugeVec
+	ResponseLatency *prometheus.HistogramVec
 }
 
 var (
@@ -66,12 +66,13 @@ func NewPromStore(metrics ...prometheus.Collector) *PromMonitor {
 			Name:      "request_task_total",
 			Help:      "request task total",
 		}, []string{"type"}),
-		ResponseLatency: prometheus.NewGaugeVec(prometheus.GaugeOpts{
+		ResponseLatency: prometheus.NewHistogramVec(prometheus.HistogramOpts{
 			Namespace: "uTask",
 			Subsystem: "producer",
 			Name:      "response_latency",
 			Help:      "response latency duration(ms)",
-		}, []string{"type"}),
+			Buckets:   nil,
+		}, []string{"method", "path", "type"}),
 	}
 	prometheus.MustRegister(prom.PullTaskCounterVec)
 	prometheus.MustRegister(prom.HandleTaskCounterVec)
@@ -111,6 +112,6 @@ func (prom *PromMonitor) Request(processType string) {
 }
 
 // Latency producer process latency
-func (prom *PromMonitor) Latency(processType string, duration time.Duration) {
-	prom.ResponseLatency.WithLabelValues(processType).Add(float64(duration))
+func (prom *PromMonitor) Latency(method, path, processType string, duration time.Duration) {
+	prom.ResponseLatency.WithLabelValues(method, path, processType).Observe(float64(duration))
 }
