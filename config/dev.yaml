@@ -12,7 +12,7 @@ server:
   url: "http://127.0.0.1:8020"
 
 # client comsumer配置
-client:
+cli:
   # 队列等待数
   max_waits: 128
   # 任务并发处理数
