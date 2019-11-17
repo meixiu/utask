@@ -72,7 +72,7 @@ func NewPromStore(metrics ...prometheus.Collector) *PromMonitor {
 			Name:      "response_latency",
 			Help:      "response latency duration(ms)",
 			Buckets:   nil,
-		}, []string{"method", "path", "type"}),
+		}, []string{"method", "type"}),
 	}
 	prometheus.MustRegister(prom.PullTaskCounterVec)
 	prometheus.MustRegister(prom.HandleTaskCounterVec)
@@ -112,6 +112,6 @@ func (prom *PromMonitor) Request(processType string) {
 }
 
 // Latency producer process latency
-func (prom *PromMonitor) Latency(method, path, processType string, duration time.Duration) {
-	prom.ResponseLatency.WithLabelValues(method, path, processType).Observe(float64(duration))
+func (prom *PromMonitor) Latency(method, processType string, duration time.Duration) {
+	prom.ResponseLatency.WithLabelValues(method, processType).Observe(float64(duration))
 }

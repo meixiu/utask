@@ -22,5 +22,5 @@ type ConsumerMonitor interface {
 // ProducerMonitor producer monitorF
 type ProducerMonitor interface {
 	Request(processType string)
-	Latency(method, path, processType string, duration time.Duration)
+	Latency(method, processType string, duration time.Duration)
 }

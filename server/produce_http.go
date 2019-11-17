@@ -60,8 +60,7 @@ func (s *HttpServer) MwPrometheusHttp(c *gin.Context) {
 	// after request
 	end := time.Now()
 	d := end.Sub(start) / time.Millisecond
-	path := parsePath(c.Request.URL.Path)
-	s.Monitor.Latency(c.Request.Method, path, "http", d)
+	s.Monitor.Latency(c.Request.Method, "http", d)
 }
 
 // ListenAndServe listens
